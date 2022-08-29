@@ -36,21 +36,21 @@ const ThankYouScreen = () => {
         <MDBRow className={css`text-align: center;`}>
             <MDBCol md="2"/>
 
-            {!!(mixedCategories && mixedCategories[0]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[0]?.image}"); border: 1px solid black; border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
+            {!!(mixedCategories && mixedCategories[0]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[0]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{mixedCategories[0]?.title}</p>
                 <button onClick={() => handleOpenService(mixedCategories[0]?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
             </MDBCol>)}
 
             <MDBCol md="1"/>
 
-            {!!(mixedCategories && mixedCategories[1]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[1]?.image}"); border: 1px solid black; border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
+            {!!(mixedCategories && mixedCategories[1]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[1]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{mixedCategories[1]?.title}</p>
                 <button onClick={() => handleOpenService(mixedCategories[0]?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
             </MDBCol>)}
 
             <MDBCol md="1"/>
             
-            {!!(mixedCategories && mixedCategories[2]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[2]?.image}"); border: 1px solid black; border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
+            {!!(mixedCategories && mixedCategories[2]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${mixedCategories[2]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{mixedCategories[2]?.title}</p>
                 <button onClick={() => handleOpenService(mixedCategories[0]?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
             </MDBCol>)}

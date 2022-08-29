@@ -1,0 +1,3 @@
+# RUN PRODUCTION
+docker build -t kam-web .
+docker run -d -p 80:81 kam-web
