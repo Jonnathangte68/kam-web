@@ -47,7 +47,7 @@ const ServiceRequestScreen = (props) => {
     `;
 
     return (
-        <MDBRow className={css`width: 100%; height: 100%; max-height: 100%; margin: 0 !important;`}>
+        <MDBRow className={css`width: 100%; height: 100%; max-height: 100%; margin: 0 !important; padding-left: 0px !important; padding-right: 0px !important;`}>
 
             {/* MAIN HEADER */}
             <MDBCol md="12" className={css`height: 12vh; padding: 0 !important;`}>
@@ -78,12 +78,12 @@ const ServiceRequestScreen = (props) => {
             {/* @ts-ignore */}
             {!!serviceSelected && (<MDBCol md="12" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${serviceSelected?.image}"); padding: 0px !important;`}>
                 <div className={css`width: 100%; height: 100%; text-align: center;`}>
-                    <p className={css`text-align: center; height: 3vh; font-family: 'Lexend Deca', sans-serif; font-weight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1}; margin-top: 3.70%; margin-bottom: 1.70%;`}>
+                    <p className={css`${!!props?.displayType?.isTabletOrMobile && "padding-top: 13vh; padding-bottom: 13vh;"} text-align: center; height: 3vh; font-family: 'Lexend Deca', sans-serif; font-weight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1}; margin-top: 3.70%; margin-bottom: 1.70%;`}>
                         {/* @ts-ignore */}
                         {serviceSelected?.title}
                     </p>
                     <div className={css`flex: 1; display: flex; justify-content: center; align-items: center; text-align: center; height: 3vh; font-family: 'Lexend Deca', sans-serif; font-weight: 400; font-size: 0.88rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1}; margin-top: 2.70%; margin-bottom: 3.70%;`}>
-                        <p className={css`width: 20%`}>
+                        <p className={css`${!!props?.displayType?.isTabletOrMobile && "padding-top: 13vh; padding-bottom: 13vh; width: 100% !important;"}; width: 20%`}>
                             {/* @ts-ignore */}
                             {serviceSelected?.description}
                         </p>
@@ -92,7 +92,8 @@ const ServiceRequestScreen = (props) => {
             </MDBCol>)}
 
             {/* CONTACT FORM DETAILS */}
-            <ContactForm onSubmit={handleSubmit} />
+            <MDBCol md="12" className={css`padding: 0px !important;`}><ContactForm onSubmit={handleSubmit} /></MDBCol>
+            
             
             {/* CONTACT US EMAIL PHONE FOOTER BANNER */}
             <MDBCol md="12" className={css`padding: 0 !important;`}>
