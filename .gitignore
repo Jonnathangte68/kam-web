@@ -11,6 +11,9 @@
 # production
 /build
 
+# api path
+/utils/global.tsx
+
 # misc
 .DS_Store
 .env.local
