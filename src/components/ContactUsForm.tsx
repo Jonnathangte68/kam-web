@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import { MDBCol, MDBRow } from "mdbreact";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import COLORS from "../utils/colors";
 import RegularTextInput from "./TextInput/RegularTextInput";
 
@@ -26,12 +27,28 @@ const ContactUsForm = (props: any) => {
         });
     };
 
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-width: 1224px)'
+      })
+      const isBigScreen = useMediaQuery({ query: '(min-width: 1824px)' })
+      const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+      const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
+      const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' })
+    
+      const displayType = {
+        isDesktopOrLaptop,
+        isBigScreen,
+        isTabletOrMobile,
+        isPortrait,
+        isRetina
+      };
+
     return (
         <form id="submit-contact-us-information" onSubmit={handleFormSubmit}>
-            <MDBRow className={css`padding: 0.33vh 33vh 5.15vh 33vh; background-color: ${COLORS.GRAY_BACKGROUND}`}>
+            <MDBRow className={css`${displayType?.isBigScreen && "padding: 0.33vh 33vh 5.15vh 33vh;"} background-color: ${COLORS.GRAY_BACKGROUND}`}>
 
                 {/* TELEPHONE NUMBER */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <p className={css`margin-left: 1.95vh; font-family: 'Lexend Deca', sans-serif;`}>Telephone Number</p>
                     <RegularTextInput
                         name="xs3"
@@ -43,7 +60,7 @@ const ContactUsForm = (props: any) => {
                 </MDBCol>
 
                 {/* NAMES */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <MDBRow>
                         <MDBCol md="6">
                             <p className={css`margin-left: 1.95vh; font-family: 'Lexend Deca', sans-serif;`}>First name</p>
@@ -69,7 +86,7 @@ const ContactUsForm = (props: any) => {
                 </MDBCol>
 
                 {/* ADDRESS */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <MDBRow>
                         <MDBCol md="6">
                             <p className={css`margin-left: 1.95vh; font-family: 'Lexend Deca', sans-serif;`}>Street address</p>
@@ -95,7 +112,7 @@ const ContactUsForm = (props: any) => {
                 </MDBCol>
 
                 {/* CITY */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <p className={css`margin-left: 1.95vh; font-family: 'Lexend Deca', sans-serif;`}>City</p>
                     <RegularTextInput
                         name="xs3"
@@ -107,7 +124,7 @@ const ContactUsForm = (props: any) => {
                 </MDBCol>
 
                 {/* MESSAGE */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <p className={css`margin-left: 1.95vh; font-family: 'Lexend Deca', sans-serif;`}>Message</p>
                     <RegularTextInput
                         name="xs3"
@@ -120,7 +137,7 @@ const ContactUsForm = (props: any) => {
                 </MDBCol>
 
                 {/* BUTTON FORM SUBMIT */}
-                <MDBCol md="12" className={css`padding-left: 0px !important; padding-right: 0px !important; margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
+                <MDBCol md="12" className={css`${displayType?.isBigScreen && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                     <button
                         className={css`font-family: 'Lexend Deca', sans-serif; width: 100%; height: 5vh; background-color: ${COLORS.PURPLE}; border: 1px solid ${COLORS.PURPLE}; border-radius: 4px; color: ${COLORS.WHITE_1}`}
                     >

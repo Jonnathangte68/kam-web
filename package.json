@@ -25,6 +25,7 @@
     "react-redux": "^8.0.2",
     "react-responsive": "^9.0.0-beta.10",
     "react-router-dom": "6",
+    "react-schedule-job": "^1.2.0",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "typescript": "^4.4.2",

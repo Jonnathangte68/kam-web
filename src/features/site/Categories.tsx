@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ServiceFilter from "../../components/ServiceFilter";
 import { fetchServicesByCategory } from "./siteSlice";
 
-const CategoriesScreen = () => {
+const CategoriesScreen = (props) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [isChatDialogVisible, setIsChatDialogVisible] = useState(false);
@@ -27,6 +27,11 @@ const CategoriesScreen = () => {
         // dispatch(fetchServicesByCategory(category_id))
         navigate(`/services/${category_id}`, { replace: false });
     };
+
+    const countryPickerMobileStyle = `
+        width: 11.45vh;
+        margin-left: -88px;
+    `;
 
     const renderServices = () => (
         <MDBRow className={css`text-align: center;`}>
@@ -77,11 +82,11 @@ const CategoriesScreen = () => {
             <MDBCol md="12" className={css`height: 12vh; padding: 0 !important;`}>
                 <div className={css`display: flex; justify-content: space-between; background-color: ${COLORS.WHITE_1}; width: 100%; height: 100%;`}>
                     <CenterAligned>
-                        <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; margin-left: 10vh;`} />
+                        <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; ${!!props?.displayType?.isTabletOrMobile ? "margin-left: 1vh;" : "margin-left: 10vh;"}`} />
                     </CenterAligned>
                         <img src="/assets/img/Logo/header-logo.png" alt="kam logo"/>
                     <CenterAligned>
-                        <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh;`} />
+                        <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh; ${!!props?.displayType?.isTabletOrMobile && countryPickerMobileStyle}`} />
                     </CenterAligned>
                 </div>
             </MDBCol>
@@ -94,7 +99,7 @@ const CategoriesScreen = () => {
                 <img 
                     alt="header"
                     src="/assets/img/contact-us/header.png"
-                    className={css`width: 100%; object-fit: cover;`}
+                    className={css`width: 100%; object-fit: cover; ${!!props?.displayType?.isTabletOrMobile && "height: 18vh;"}`}
                 />
             </MDBCol>
 
@@ -111,7 +116,7 @@ const CategoriesScreen = () => {
                 <img 
                     alt="header"
                     src="/assets/img/Contact us/footer.png"
-                    className={css`width: 100%; object-fit: cover;`}
+                    className={css`width: 100%; object-fit: cover; ${!!props?.displayType?.isTabletOrMobile && "height: 33vh;"}`}
                 />
             </MDBCol>
 

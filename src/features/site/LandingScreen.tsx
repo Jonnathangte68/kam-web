@@ -11,7 +11,7 @@ import ChatDialog from "../../components/ChatDialog";
 import ServiceFilter from "../../components/ServiceFilter";
 import { useAppSelector } from "../../app/hooks";
 
-const LandingScreen = () => {
+const LandingScreen = (props) => {
     const navigate = useNavigate();
     const [isChatDialogVisible, setIsChatDialogVisible] = useState(false);
     const [isServiceSidebarVisible, setIsServiceSidebarVisible] = useState(false);
@@ -25,18 +25,23 @@ const LandingScreen = () => {
         setIsChatDialogVisible(!isChatDialogVisible);
     };
 
+    const countryPickerMobileStyle = `
+        width: 11.45vh;
+        margin-left: -88px;
+    `;
+
     const renderServices = () => (
         <MDBRow className={css`text-align: center;`}>
-            <MDBCol md="2"/>
+            <MDBCol xs="1" md="2"/>
 
-            {!!(categories.length > 0 && categories[0]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${categories[0]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
+            {!!(categories.length > 0 && categories[0]) && (<MDBCol xs="12" md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${categories[0]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{categories[0].title}</p>
                 <button onClick={handleGoServices} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
             </MDBCol>)}
 
             <MDBCol md="1"/>
 
-            {!!(categories.length > 1 && categories[1]) && (<MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${categories[1]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
+            {!!(categories.length > 1 && categories[1]) && (<MDBCol xs="12" md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${categories[1]?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{categories[1].title}</p>
                 <button onClick={handleGoServices}  className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
             </MDBCol>)}
@@ -57,11 +62,11 @@ const LandingScreen = () => {
             <MDBCol md="12" className={css`height: 12vh; padding: 0 !important;`}>
                 <div className={css`display: flex; justify-content: space-between; background-color: ${COLORS.WHITE_1}; width: 100%; height: 100%;`}>
                     <CenterAligned>
-                        <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; margin-left: 10vh;`} />
+                        <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; ${!!props?.displayType?.isTabletOrMobile ? "margin-left: 1vh;" : "margin-left: 10vh;"}`} />
                     </CenterAligned>
                         <img src="/assets/img/Logo/header-logo.png" alt="kam logo"/>
                     <CenterAligned>
-                        <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh;`} />
+                        <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh; ${!!props?.displayType?.isTabletOrMobile && countryPickerMobileStyle}`} />
                     </CenterAligned>
                 </div>
             </MDBCol>
@@ -74,7 +79,7 @@ const LandingScreen = () => {
                 <img 
                     alt="header"
                     src="/assets/img/contact-us/header.png"
-                    className={css`width: 100%; object-fit: cover;`}
+                    className={css`width: 100%; object-fit: cover; ${!!props?.displayType?.isTabletOrMobile && "height: 18vh;"}`}
                 />
             </MDBCol>
 
@@ -88,7 +93,7 @@ const LandingScreen = () => {
 
             {/* OUR STORY BANNER */}
             <MDBCol md="12" className={css`padding: 0 !important;`}>
-                <img className={css`width: 100%;`} alt="tell our story kam" src="/assets/img/our-story.png" />
+                <img className={css`width: 100%; ${!!props?.displayType?.isTabletOrMobile && "height: 51vh;"}`} alt="tell our story kam" src={!!props?.displayType?.isTabletOrMobile ? "/assets/img/our-story-mobile.png" : "/assets/img/our-story.png" } />
             </MDBCol>
             
             {/* CONTACT US EMAIL PHONE FOOTER BANNER */}
@@ -96,7 +101,7 @@ const LandingScreen = () => {
                 <img 
                     alt="header"
                     src="/assets/img/Contact us/footer.png"
-                    className={css`width: 100%; object-fit: cover;`}
+                    className={css`width: 100%; object-fit: cover; ${!!props?.displayType?.isTabletOrMobile && "height: 33vh;"}`}
                 />
             </MDBCol>
 
