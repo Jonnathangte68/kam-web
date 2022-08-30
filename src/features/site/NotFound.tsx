@@ -36,7 +36,7 @@ const NotFoundScreen = (props) => {
                     <CenterAligned>
                         <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; ${!!props?.displayType?.isTabletOrMobile ? "margin-left: 1vh;" : "margin-left: 10vh;"}`} />
                     </CenterAligned>
-                        <img  style={{ width: "19vh !important", height: "auto" }} src="/assets/img/Logo/header-logo.png" alt="kam logo"/>
+                        <img className={css`width: 19vh !important; height: auto;`}  src="/assets/img/Logo/header-logo.png" alt="kam logo"/>
                     <CenterAligned>
                         <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh; ${!!props?.displayType?.isTabletOrMobile && countryPickerMobileStyle}`} />
                     </CenterAligned>
@@ -88,7 +88,7 @@ const NotFoundScreen = (props) => {
             {/* FOOTER */}
             <MDBCol md="12" className={css`height: 12vh; padding: 0 !important;`}>
                 <div className={css`display: flex; justify-content: center; background-color: ${COLORS.WHITE_1}; width: 100%; height: 100%;`}>
-                    <img src="/assets/img/Logo/header-logo.png" alt="kam service to your door footer logo"/>
+                    <img className={css`width: 19vh !important; height: auto;`} src="/assets/img/Logo/header-logo.png" alt="kam service to your door footer logo"/>
                 </div>
             </MDBCol>
         </MDBRow>

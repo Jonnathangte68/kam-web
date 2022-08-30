@@ -120,7 +120,7 @@ const LandingScreen = (props) => {
             {/* FOOTER */}
             <MDBCol md="12" className={css`height: 12vh; padding: 0 !important;`}>
                 <div className={css`display: flex; justify-content: center; background-color: ${COLORS.WHITE_1}; width: 100%; height: 100%;`}>
-                    <img src="/assets/img/Logo/header-logo.png" alt="kam service to your door footer logo"/>
+                    <img className={css`width: 19vh !important; height: auto;`}  src="/assets/img/Logo/header-logo.png" alt="kam service to your door footer logo"/>
                 </div>
             </MDBCol>
         </MDBRow>
