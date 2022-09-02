@@ -42,7 +42,7 @@ const CategoriesScreen = (props) => {
                         return (
                             <>
                                 <MDBCol md="2"/>
-                                <MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
+                                <MDBCol md="2" className={css`${props?.displayType?.isTabletOrMobile && "width: 60%; height: 44vh; margin-bottom: 5%; margin-left: 20%;"} background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
                                     <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{category?.title}</p>
                                     <button onClick={() => handleServiceSelection(category?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
                                 </MDBCol>
@@ -55,7 +55,7 @@ const CategoriesScreen = (props) => {
                         return (
                             <>
                                 <MDBCol md="1"/>
-                                <MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
+                                <MDBCol md="2" className={css`${props?.displayType?.isTabletOrMobile && "width: 60%; height: 44vh; margin-bottom: 5%; margin-left: 20%;"} background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
                                     <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{category?.title}</p>
                                     <button onClick={() => handleServiceSelection(category?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
                                 </MDBCol>
@@ -65,7 +65,7 @@ const CategoriesScreen = (props) => {
                     }
 
                     return (
-                        <MDBCol md="2" className={css`background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
+                        <MDBCol md="2" className={css`${props?.displayType?.isTabletOrMobile && "width: 60%; height: 44vh; margin-bottom: 5%; margin-left: 20%;"} background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url("${category?.image}"); border-radius: 10vh; padding-top: 7.75%; padding-bottom: 4%; margin-top: 1.15vh; margin-bottom: 1.15vh;`}>
                             <p className={css`font-family: 'Lexend Deca', sans-serif; font-wight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1};`}>{category?.title}</p>
                             <button onClick={() => handleServiceSelection(category?.id)} className={css`border-width: 0.281vh; border-color: ${COLORS.WHITE_1}; color: ${COLORS.WHITE_1}; border-radius: 10vh; border-style: solid; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: transparent; `}>SEE MORE</button>
                         </MDBCol>

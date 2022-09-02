@@ -14,6 +14,12 @@ export interface DemoState {
     services: Array<any>;
     isFetchingServicesError?: string;
 
+    isFetchingMessages: 'idle' | 'success' | 'error';
+    messages: Array<any>;
+    isFetchingMessagesError?: string;
+
+    threadId?: number;
+
     /*
     // Data Sources
     users: any;
@@ -77,7 +83,10 @@ const initialState: DemoState = {
     categories: [],
 
     isFetchingServices: 'idle',
-    services: []
+    services: [],
+
+    isFetchingMessages: 'idle',
+    messages: []
 
     /*
     users: [],
@@ -215,6 +224,42 @@ export const saveNewContactSubmission = createAsyncThunk(
   }
 );
 
+export const getMessages = createAsyncThunk(
+  '/messages/{thread_id}',
+  async (thread_id: number, { rejectWithValue, getState }) => {
+    console.log("getting messages from thread.");
+    try {
+      const requestor = axios.create();
+      const resp = await requestor.get(`${SERVER_BASE_API}/messages/${thread_id}`);
+      return resp.data;
+    } catch (err) {
+        const message = (err as any).response?.data?.message;
+        return rejectWithValue(message);
+    }
+  }
+);
+
+export const sendMessage = createAsyncThunk(
+  '/send-message',
+  async (message: string, { rejectWithValue, getState }) => {
+    console.log("getting messages from thread.");
+    try {
+      const requestor = axios.create();
+      const threadId = (getState() as any)?.site?.threadId;
+      let payload = {
+        message: message,
+        thread: threadId
+      };
+      console.log("payload save message", payload);
+      const resp = await requestor.post(`${SERVER_BASE_API}/send-message`, payload);
+      return resp.data;
+    } catch (err) {
+        const message = (err as any).response?.data?.message;
+        return rejectWithValue(message);
+    }
+  }
+);
+
 export const siteSlice = createSlice({
   name: 'site',
   initialState,
@@ -254,6 +299,29 @@ export const siteSlice = createSlice({
     .addCase(fetchServicesByCategory.rejected, (state, action) => {
       state.isFetchingServices = 'error';
       state.isFetchingServicesError = JSON.stringify(action.payload);
+    })
+    .addCase(getMessages.pending, (state) => {
+      state.isFetchingMessages = 'idle';
+    })
+    .addCase(getMessages.fulfilled, (state, action) => {
+      state.isFetchingMessages = 'success';
+      state.messages = action.payload;
+    })
+    .addCase(getMessages.rejected, (state, action) => {
+      state.isFetchingMessages = 'error';
+      state.isFetchingMessagesError = JSON.stringify(action.payload);
+    })
+    .addCase(sendMessage.pending, (state) => {
+      state.isFetchingMessages = 'idle';
+    })
+    .addCase(sendMessage.fulfilled, (state, action) => {
+      state.isFetchingMessages = 'success';
+      console.log("success action payload", action.payload);
+      state.threadId = action.payload?.chatthread_id;
+    })
+    .addCase(sendMessage.rejected, (state, action) => {
+      state.isFetchingMessages = 'error';
+      state.isFetchingMessagesError = JSON.stringify(action.payload);
     })
   },
 });

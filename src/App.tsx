@@ -15,11 +15,12 @@ import ThankYou from "./features/site/ThankYou";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import "@fontsource/lexend-deca"; // Defaults to weight 400.
 import { useEffect } from "react";
-import { fetchAllCategories } from "./features/site/siteSlice";
+import { fetchAllCategories, getMessages } from "./features/site/siteSlice";
 import { useMediaQuery } from "react-responsive";
 
 export default function App() {
   const dispatch = useAppDispatch();
+  const threadId = useAppSelector((state) => state.site.threadId);
 
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1224px)'
@@ -44,8 +45,9 @@ export default function App() {
   const handleLoadMessageThreads = () => {
     // handle load messages
     console.log("load messages from the internet");
-
-    
+    if (threadId) {
+      dispatch(getMessages(threadId))
+    }
   };
 
   const jobs = [

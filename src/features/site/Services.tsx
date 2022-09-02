@@ -35,6 +35,23 @@ const ServicesScreen = (props: any) => {
             {services.map(
                 (service, divIndex) => {
 
+                    if (props?.displayType?.isTabletOrMobile) {
+                        return (
+                            <>
+                                <MDBCol md="6" className={css`${props?.displayType?.isTabletOrMobile && "height: 44vh;"} margin-top: 0vh; margin-bottom: 0vh;`}>
+                                    <div className={css`background-position: center; background-repeat: no-repeat; background-size: cover; width: 100%; height: 91%; background-image: url("${service?.image}"); border-radius: 3vh; padding-top: .22%; padding-bottom: .22%; padding-left: 3.15%;`}>
+                                        <p className={css`height: 9vh; width: 66%; font-family: 'Lexend Deca', sans-serif; font-weight: 700; font-size: 1.44rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1}; margin-top: 3.70%; margin-bottom: 3.70%;`}>{service?.title}</p>
+                                        <p className={css`height: 9vh; width: 66%; font-family: 'Lexend Deca', sans-serif; font-weight: 400; font-size: 0.72rem; color: ${COLORS.WHITE_1}; text-shadow: 1px 1px ${COLORS.BLACK_1}; margin-top: 4%; margin-bottom: 4.70%;`}><br/>{service?.description}</p>
+                                        <button onClick={() => handleNewServiceRequest(service?.id)} className={css`height: 5vh; width: 90%; color: ${COLORS.WHITE_1}; border-radius: 0.35vh; border-style: none; padding: 0.66vh 1.77vh 0.66vh 1.77vh; background-color: ${COLORS.PURPLE}; margin-top: 22.15%; margin-left: 3%; margin-bottom: 1.70%;`}>Order Now</button>
+                                        <div className={css`position: relative; top: -83%; left: 69%; background-color: ${COLORS.WHITE_1}; border-radius: 50%; width: 8vh; height: 8vh; text-align: center; padding-top: 5.15%; padding-bottom: 3.15%; color: ${COLORS.BLACK_1}; font-weight: bold;`}>
+                                            {service?.price}€/h
+                                        </div>
+                                    </div>
+                                </MDBCol>
+                            </>
+                        );
+                    }
+
                     return (
                         <>
                             <MDBCol md="6" className={css`margin-top: 0vh; margin-bottom: 0vh;`}>
@@ -49,6 +66,7 @@ const ServicesScreen = (props: any) => {
                             </MDBCol>
                         </>
                     );
+
                 }
             )}
         </MDBRow>
