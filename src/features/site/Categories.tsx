@@ -4,20 +4,60 @@ import CenterAligned from "../../components/CenterAligned";
 import CountryPicker from "../../components/CountryPicker";
 import { IoReorderThree } from "react-icons/io5";
 import COLORS from "../../utils/colors";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NavigationBar from "../../components/NavigationBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatDialog from "../../components/ChatDialog";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ServiceFilter from "../../components/ServiceFilter";
-import { fetchServicesByCategory } from "./siteSlice";
+import { fetchAllCategories, filterCategories, searchCategory, sortCategories } from "./siteSlice";
 
 const CategoriesScreen = (props) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    let location = useLocation();
+    
     const [isChatDialogVisible, setIsChatDialogVisible] = useState(false);
     const [isServiceSidebarVisible, setIsServiceSidebarVisible] = useState(false);
     const categories = useAppSelector((state) => state.site.categories);
+    // let { filter_by, sort_by } = useParams();
+    const params = new URLSearchParams(window.location.search);
+    const filterBy = params.get('filter_by'); // filter by this elements
+    const sortBy = params.get('sort_by'); // sort by this elements
+    const searchBy = params.get('search'); // sort by this elements
+
+    useEffect(() => {
+        // Reset
+        if (!filterBy && !sortBy && !searchBy) {
+            dispatch(fetchAllCategories());
+        }
+
+
+        // Filter items
+        if (!!filterBy) {
+            (async () => {
+                await dispatch(fetchAllCategories());
+                dispatch(filterCategories(filterBy));
+            })();
+        }
+
+        // Sort items
+        if (!!sortBy) {
+            (async () => {
+                await dispatch(fetchAllCategories());
+                dispatch(sortCategories(sortBy));
+            })();
+        }
+
+        if (!!searchBy) {
+            console.log("is searching true.!");
+            (async () => {
+                await dispatch(fetchAllCategories());
+                await dispatch(searchCategory(searchBy));
+            })();
+        }
+    }, [dispatch, filterBy, sortBy]);
+    
     
     const handleToggleLiveChat = () => {
         setIsChatDialogVisible(!isChatDialogVisible);
@@ -27,6 +67,8 @@ const CategoriesScreen = (props) => {
         // dispatch(fetchServicesByCategory(category_id))
         navigate(`/services/${category_id}`, { replace: false });
     };
+
+    console.log("categories ", categories);
 
     const countryPickerMobileStyle = `
         width: 11.45vh;
@@ -105,9 +147,13 @@ const CategoriesScreen = (props) => {
 
             {/* SERVICES CARDS */}
             <MDBCol md="12" className={css`padding: 30.284px 0px 3.955vh 0px;`}>
+                {((!!sortBy || !!filterBy || !!searchBy) && categories.length === 0) ?
+                <p className={css`font-family: 'Lexend Deca', sans-serif; padding-top: 0.85vh; margin-bottom: 2.5vh !important; text-align: center; font-weight: 600; font-size: 1.715rem; padding-top: 17vh; padding-bottom: 13vh;`}>
+                    No results.
+                </p> : 
                 <p className={css`font-family: 'Lexend Deca', sans-serif; padding-top: 0.85vh; margin-bottom: 2.5vh !important; text-align: center; font-weight: 600; font-size: 1.715rem;`}>
                     All Categories
-                </p>
+                </p>}
                 {renderServices()}
             </MDBCol>
             

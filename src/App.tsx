@@ -14,8 +14,7 @@ import ServiceRequest from "./features/site/ServiceRequest";
 import ThankYou from "./features/site/ThankYou";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import "@fontsource/lexend-deca"; // Defaults to weight 400.
-import { useEffect } from "react";
-import { fetchAllCategories, getMessages } from "./features/site/siteSlice";
+import { getMessages } from "./features/site/siteSlice";
 import { useMediaQuery } from "react-responsive";
 
 export default function App() {
@@ -37,10 +36,6 @@ export default function App() {
     isPortrait,
     isRetina
   };
-
-  useEffect(() => {
-    dispatch(fetchAllCategories())
-  }, []);
 
   const handleLoadMessageThreads = () => {
     // handle load messages

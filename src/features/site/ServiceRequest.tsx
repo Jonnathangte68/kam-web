@@ -17,6 +17,7 @@ import { saveNewServiceRequest } from "./siteSlice";
 const ServiceRequestScreen = (props) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const [additionalServices, setadditionalServices] = useState();
     const [isServiceSidebarVisible, setIsServiceSidebarVisible] = useState(false);
     
     const [isChatDialogVisible, setIsChatDialogVisible] = useState(false);
@@ -26,10 +27,25 @@ const ServiceRequestScreen = (props) => {
 
     useEffect(() => {
         const selectedServiceId = _.toNumber(id);
-        const selectedSubcategory = services.filter(item => item?.id === selectedServiceId)[0];
+        const selectedSubcategory = services
+            .filter(
+                item => item?.id === selectedServiceId
+            )[0];
+        
         if (!!selectedSubcategory) {
             setServiceSelected(selectedSubcategory); 
+
+            if (!!selectedSubcategory?.['additionalservices']) {
+                const additionalServicesSelection = JSON.parse(selectedSubcategory?.['additionalservices']).map(additional => {
+                    return {
+                        name: additional,
+                        selected: false
+                    };
+                });
+                setadditionalServices(additionalServicesSelection);
+            }
         }
+
     }, [id, services]);
     
     const handleToggleLiveChat = () => {
@@ -45,6 +61,8 @@ const ServiceRequestScreen = (props) => {
         width: 11.45vh;
         margin-left: -88px;
     `;
+
+    console.log("service", serviceSelected);
 
     return (
         <MDBRow className={css`width: 100%; height: 100%; max-height: 100%; margin: 0 !important; padding-left: 0px !important; padding-right: 0px !important;`}>
@@ -92,7 +110,7 @@ const ServiceRequestScreen = (props) => {
             </MDBCol>)}
 
             {/* CONTACT FORM DETAILS */}
-            <MDBCol md="12" className={css`padding: 0px !important;`}><ContactForm onSubmit={handleSubmit} /></MDBCol>
+            <MDBCol md="12" className={css`padding: 0px !important;`}><ContactForm onSubmit={handleSubmit} additionalServices={additionalServices} /></MDBCol>
             
             
             {/* CONTACT US EMAIL PHONE FOOTER BANNER */}

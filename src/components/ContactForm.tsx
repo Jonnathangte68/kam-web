@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
+import { cloneDeep, isEmpty } from "lodash";
 import { MDBCol, MDBRow } from "mdbreact";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import COLORS from "../utils/colors";
 import Checkbox from "./Checkbox";
@@ -11,6 +12,7 @@ const ContactForm = (props: any) => {
     const [date, setdate] = useState();
     const [time, settime] = useState();
     const [first_name, setfirstname] = useState();
+    const [additionalSErvicesSelected, setadditionalSErvicesSelected] = useState();
     const [last_name, setlastname] = useState();
     const [telephone, settelephone] = useState();
     const [email, setemail] = useState();
@@ -19,7 +21,32 @@ const ContactForm = (props: any) => {
     const [city, setcity] = useState();
     const [message, setmessage] = useState();
 
+    const getAdditionalServicesSelected = () => {
+        console.log("get additional services selected.");
+        if (!additionalSErvicesSelected || isEmpty(additionalSErvicesSelected)) {
+            console.log("is empty enters first condition!");
+            return [];
+        }
+        console.log("additional services selected ", additionalSErvicesSelected);
+        console.log("to send ", (additionalSErvicesSelected as [])?.filter(additional => !!additional['selected']));
+        return (additionalSErvicesSelected as [])?.filter(additional => !!additional['selected'])
+    };
+
     const handleFormSubmit = () => {
+        console.log("form submit", {
+            phone_number: phone,
+            date: date,
+            time: time,
+            first_name: first_name,
+            last_name: last_name,
+            telephone: telephone,
+            email: email,
+            street: street_address,
+            apartment_no: apartment_no,
+            additionalservices: getAdditionalServicesSelected(),
+            city: city,
+            message: message
+        });
         props?.onSubmit({
             phone_number: phone,
             date: date,
@@ -30,6 +57,7 @@ const ContactForm = (props: any) => {
             email: email,
             street: street_address,
             apartment_no: apartment_no,
+            additionalservices: getAdditionalServicesSelected(),
             city: city,
             message: message
         });
@@ -50,6 +78,36 @@ const ContactForm = (props: any) => {
         isPortrait,
         isRetina
       };
+
+
+      useEffect(() => {
+        if (props?.additionalServices) {
+            setadditionalSErvicesSelected(props?.additionalServices); 
+        }
+      }, [props?.additionalServices]);
+
+      const handleAdditionalServiceSelection = (element, selected) => {
+        console.log("element", element);
+        console.log("selected", selected);
+        const svcs = cloneDeep(additionalSErvicesSelected);
+        if (!!svcs) {
+            // @ts-ignore
+            const objIndex = (svcs as [])?.findIndex((obj => obj?.name === element));
+            //Log object to Console.
+            console.log("Before update: ", svcs[objIndex]);
+            // @ts-ignore
+            (svcs[objIndex] as {}).selected = selected;
+            console.log("After update: ", svcs[objIndex]);
+            setadditionalSErvicesSelected(svcs);
+            //Update object's name property.
+            // @ts-ignore
+            // svcs[objIndex]?.selected = selected;
+        }
+      };
+      
+
+
+      console.log("additional services", additionalSErvicesSelected);
 
     return (
         <MDBRow className={css`${(displayType?.isBigScreen || displayType?.isDesktopOrLaptop) ? "padding: 5.15vh 33vh 5.15vh 33vh;" : "padding-left: 1vh !important; padding-right: 1vh !important;"} background-color: ${COLORS.GRAY_BACKGROUND}`}>
@@ -98,11 +156,12 @@ const ContactForm = (props: any) => {
             <MDBCol md="12" className={css`${(displayType?.isBigScreen || displayType?.isDesktopOrLaptop) && "padding-left: 0px !important; padding-right: 0px !important;"} margin-top: 2.652vh; margin-bottom: 2.652vh;`}>
                 <p className={css`font-family: 'Lexend Deca', sans-serif; margin-top: 0vh; margin-bottom: 3.15vh;`}><span className={css`font-family: 'Lexend Deca', sans-serif; border: 1px solid ${COLORS.RED_1}; color: ${COLORS.WHITE_1}; padding: 0.61vh 0.99vh 0.61vh 0.99vh; background-color: ${COLORS.RED_1}; border-radius: 50%; font-weight: 900; margin-right: 1vh;`}>3</span> Select additional services</p>
                 <MDBRow>
-                    {[{ name: "Wiping top dust - 60 min | € 47,90", selected: true }, { name: "Radiator cleaning - 18 min | € 16.00", selected: false }].map(
+                    {/* @ts-ignore */}
+                    {!!additionalSErvicesSelected && additionalSErvicesSelected?.map(
                         additionalService => {
                             return (
                                 <MDBCol md="6">
-                                    <Checkbox checked={additionalService?.selected} />
+                                    <Checkbox toggleSelection={(selected) => handleAdditionalServiceSelection(additionalService?.name, selected)} checked={additionalService?.selected} />
                                     <span className={css`padding-left: 1.15vh; font-family: 'Lexend Deca', sans-serif;`}>{additionalService?.name}</span>
                                 </MDBCol>
                             )

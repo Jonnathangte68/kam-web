@@ -5,6 +5,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { css } from "@emotion/css";
 import COLORS from "../../utils/colors";
+import { useAppDispatch } from "../../app/hooks";
 
 const InputSearch = (props: any) => {
 
@@ -34,7 +35,7 @@ const InputSearch = (props: any) => {
                     border-radius: 5px 0 0 5px;
                     cursor: pointer;
                     font-size: 20px;
-                  `}>
+                  `} onClick={props?.onSearch}>
                     <i className="fa fa-search" style={{ color: COLORS.SECONDARY_COLOR }}></i>
                 </button>
                   <input type="text" className={css`
@@ -47,8 +48,7 @@ const InputSearch = (props: any) => {
                       outline: none;
                       color: ${COLORS.BLACK_1};
                     `}
-                    value={props.value}
-                    onChange={props.onChange}
+                    onChange={(e) => props.onChange(e.target.value)}
                     placeholder={props.placeholder}
                   />
               </div>

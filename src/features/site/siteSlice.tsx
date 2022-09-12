@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow-restricted-names */
-import { CombinedState, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CombinedState, createAsyncThunk, createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import _ from 'lodash';
+import _, { concat, lowerCase } from 'lodash';
 import { RootState } from '../../app/store';
 import { SERVER_BASE_API } from '../../utils/global';
 
@@ -17,6 +17,10 @@ export interface DemoState {
     isFetchingMessages: 'idle' | 'success' | 'error';
     messages: Array<any>;
     isFetchingMessagesError?: string;
+
+    isFetchingFilters: 'idle' | 'success' | 'error';
+    filters: Array<any>;
+    isFetchingFiltersError?: string;
 
     threadId?: number;
 
@@ -86,7 +90,10 @@ const initialState: DemoState = {
     services: [],
 
     isFetchingMessages: 'idle',
-    messages: []
+    messages: [],
+
+    isFetchingFilters: 'idle',
+    filters: []
 
     /*
     users: [],
@@ -179,6 +186,7 @@ export const saveNewServiceRequest = createAsyncThunk(
         street_address: form_data?.street,
         apartment_no: form_data?.apartment_no,
         city: form_data?.city,
+        additionalservices: form_data?.additionalservices,
         message: form_data?.message,
       });
       return resp.data;
@@ -260,12 +268,57 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const loadFilters = createAsyncThunk(
+  '/types',
+  async (undefined, { rejectWithValue, getState }) => {
+    console.log("getting types.");
+    try {
+      const requestor = axios.create();
+      const resp = await requestor.get(`${SERVER_BASE_API}/types`);
+      return resp.data;
+    } catch (err) {
+        const message = (err as any).response?.data?.message;
+        return rejectWithValue(message);
+    }
+  }
+);
+
 export const siteSlice = createSlice({
   name: 'site',
   initialState,
   reducers: {
     setIsFetchingLocation: (state, action: PayloadAction<any>) => {
     //   state.isFetchingLocation = action.payload;
+    },
+    filterCategories: (state, action: PayloadAction<string>) => {
+      const result = state.categories.filter(
+        (category) => {
+          return lowerCase(category?.title) === lowerCase(action.payload)
+        }
+      );
+      state.categories = result;
+    },
+    sortCategories: (state, action: PayloadAction<any>) => {
+      const sortedItems = state.categories.filter(
+        (category) => {
+          return lowerCase(category?.title) === lowerCase(action.payload)
+        }
+      );
+      const rest = state.categories.filter(
+        (category) => {
+          return lowerCase(category?.title) !== lowerCase(action.payload)
+        }
+      );
+      state.categories = concat(sortedItems, rest);
+    },
+    searchCategory: (state, action: PayloadAction<any>) => {
+      console.log("HANDLE SEARCH!");
+      const result = state.categories.filter(
+        (category) => {
+          return lowerCase(category?.title).includes(lowerCase(action.payload))
+        }
+      );
+      state.categories = result;
     }
   },
   extraReducers: (builder) => {
@@ -323,11 +376,26 @@ export const siteSlice = createSlice({
       state.isFetchingMessages = 'error';
       state.isFetchingMessagesError = JSON.stringify(action.payload);
     })
+    .addCase(loadFilters.pending, (state) => {
+      state.isFetchingFilters = 'idle';
+    })
+    .addCase(loadFilters.fulfilled, (state, action) => {
+      state.isFetchingFilters = 'success';
+      console.log("success action payload", action.payload);
+      state.filters = action.payload;
+    })
+    .addCase(loadFilters.rejected, (state, action) => {
+      state.isFetchingFilters = 'error';
+      state.isFetchingFiltersError = JSON.stringify(action.payload);
+    })
   },
 });
 
 export const {
-    setIsFetchingLocation
+    setIsFetchingLocation,
+    filterCategories,
+    sortCategories,
+    searchCategory,
 } = siteSlice.actions;
 
 // export const getDemoUser = (state: RootState) => state.demo.userlogin;

@@ -6,13 +6,16 @@ import { IoReorderThree } from "react-icons/io5";
 import COLORS from "../../utils/colors";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../../components/NavigationBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatDialog from "../../components/ChatDialog";
 import ServiceFilter from "../../components/ServiceFilter";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { fetchAllCategories } from "./siteSlice";
 
 const LandingScreen = (props) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    
     const [isChatDialogVisible, setIsChatDialogVisible] = useState(false);
     const [isServiceSidebarVisible, setIsServiceSidebarVisible] = useState(false);
     const categories = useAppSelector((state) => state.site.categories);
@@ -29,6 +32,11 @@ const LandingScreen = (props) => {
         width: 11.45vh;
         margin-left: -88px;
     `;
+
+    useEffect(() => {
+        dispatch(fetchAllCategories());
+    }, []);
+    
 
     const renderServices = () => (
         <MDBRow className={css`text-align: center;`}>
