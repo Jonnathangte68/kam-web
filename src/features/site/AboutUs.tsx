@@ -11,6 +11,7 @@ import ChatDialog from "../../components/ChatDialog";
 import { saveNewFeedback } from "./siteSlice";
 import ServiceFilter from "../../components/ServiceFilter";
 import { useAppDispatch } from "../../app/hooks";
+import CountryPickerMobile from "../../components/CountryPickerMobile";
 
 const AboutUsScreen = (props) => {
     const dispatch = useAppDispatch();
@@ -39,7 +40,7 @@ const AboutUsScreen = (props) => {
 
     const countryPickerMobileStyle = `
         width: 11.45vh;
-        margin-left: -88px;
+        margin-left: 500px;
     `;
 
     console.log("is tablet or mobile", props?.displayType);
@@ -53,10 +54,13 @@ const AboutUsScreen = (props) => {
                     <CenterAligned>
                     <IoReorderThree onClick={() => setIsServiceSidebarVisible(true)} className={css`width: 7vh; height: 7vh; ${!!props?.displayType?.isTabletOrMobile ? "margin-left: 1vh;" : "margin-left: 10vh;"}`} />
                     </CenterAligned>
-                        <img className={css`width: 19vh !important; height: auto;`}  src="/assets/img/Logo/header-logo.png" alt="kam logo"/>
-                    <CenterAligned>
-                        <CountryPicker className={css`width: 19.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh; ${!!props?.displayType?.isTabletOrMobile && countryPickerMobileStyle}`} />
-                    </CenterAligned>
+                        {!!props?.displayType?.isTabletOrMobile ? <img className={css`width: 19vh !important; height: auto; margin-right: -11vh;`}  src="/assets/img/Logo/header-logo.png" alt="kam logo"/> : <img className={css`width: 19vh !important; height: auto;`}  src="/assets/img/Logo/header-logo.png" alt="kam logo"/>}
+                    {!props?.displayType?.isTabletOrMobile && (<CenterAligned>
+                        <CountryPicker className={css`width: 90.45vh; height: 4.25vh; padding-top: 0.1vh; padding-bottom: 0.1vh; ${!!props?.displayType?.isTabletOrMobile && countryPickerMobileStyle}`} />
+                    </CenterAligned>)}
+                    {!!props?.displayType?.isTabletOrMobile && (
+                        <CountryPickerMobile className={css`width: 33.45vh; height: 4.25vh; padding-top: 2vh; padding-bottom: 0.1vh; `} />
+                    )}
                 </div>
             </MDBCol>
 
